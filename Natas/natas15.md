@@ -1,14 +1,30 @@
-It's a simple SQL Injecting as we examing the source code:
+# Analyze
+It's a simple SQL Injection as we examing the source code:
 
 ```php
 $query = "SELECT * from users where username=\"" . $_REQUEST["username"] . "\"";
 ```
+And since we can only receive True/False from the server, we need `Boolean-based SQL Injection`.
 
-The volunability can't be more obvious: we need a payload like below:
+So we need a SQL sentence like below:
 ```sql
-
+SELECT * from users where username="natas16" and password=...
 ```
+We will find out the password one digit at a time, by using:
+- `SUBSTR()` to choose a digit at the specified position
+- `ASCII()` to get the ascii-code of that digit
+- `<=` to narrow the scope.
 
+Here's the pay load below:
+```py
+payload = f'natas16" and {this} <= ASCII(SUBSTRING(password, {i}, 1)) -- '
+```
+Where 'this' is the ascii code number to try this time, 'i' is the position of password that will be tested.
+
+After that, we just needs to find whether there's "This user exists." in the response content, and determine whether our a ssumptions ('this') works.
+
+# Solution
+The complete Python code is as below. Please change the password for natas15 if a long time has passed.
 ```py
 import requests
 
