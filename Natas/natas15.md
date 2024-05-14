@@ -53,3 +53,5 @@ for i in range(1, 64):
     flag += chr(test(i))
     print(flag)
 ```
+With the process like below, we will finally got the password:
+![Screenshot_20240515_072320_com termux_edit_833277939863991](https://github.com/BernieHuang2008/blog/assets/88757735/2f49ef62-3821-4da4-9f8d-b5b8ed8a6ca9)
